@@ -32,8 +32,8 @@ db.once('open', () => {
 })
 
 //把樣板引擎交給express-handlebars
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.set('view engine', 'hbs')
 
 // 告訴express靜態檔案夾的位置
 app.use(express.static('public'))
