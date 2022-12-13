@@ -9,7 +9,10 @@ const port = 3000
 const exphbs = require('express-handlebars')
 
 //載入restaurant.json
-const restaurantList = require('./restaurant.json')
+//const restaurantList = require('./restaurant.json')
+
+// 載入 RestaurantList model
+const RestaurantList = require('./models/restaurant_list') 
 
 //僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
@@ -41,7 +44,10 @@ app.use(express.static('public'))
 
 //路由設定
 app.get('/', (req,res) => {
-  res.render('index', {restaurants: restaurantList.results})
+  RestaurantList.find()
+    .lean()
+    .then(restaurants => res.render('index', { restaurants }))
+    .catch(error => console.log(error))
 })
 
 app.get('/restaurants/:restaurant_id', (req,res) => {
