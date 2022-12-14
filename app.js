@@ -11,6 +11,9 @@ const exphbs = require('express-handlebars')
 // 載入 RestaurantList model
 const RestaurantList = require('./models/restaurant_list') 
 
+// 載入method override
+const methodOverride = require('method-override')
+
 //僅在非正式環境時, 使用 dotenv
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -41,6 +44,7 @@ app.use(express.urlencoded({ extended: true }))
 // 告訴express靜態檔案夾的位置
 app.use(express.static('public'))
 
+app.use(methodOverride("_method"))
 
 // 路由設定
 app.get('/', (req,res) => {
@@ -58,6 +62,7 @@ app.get('/restaurants/:id', (req,res) => {
     .catch(error => console.log(error))
 })
 
+// // 搜尋餐廳
 // app.get('/search', (req,res) => {
 //   const keyword = req.query.keyword
 //   const restaurants = restaurantList.results.filter(restaurant => 
@@ -79,7 +84,7 @@ app.post('/restaurants', (req, res) => {
 // 修改餐廳
 app.get('/restaurants/:id/edit', (req, res) => {
   const { id } = req.params
-  return RestaurantList.findById(id)
+  RestaurantList.findById(id)
     .lean()
     .then(restaurant => res.render('edit', { restaurant }))
     .catch(error => console.log(error))
@@ -87,8 +92,16 @@ app.get('/restaurants/:id/edit', (req, res) => {
 
 app.post('/restaurants/:id/edit', (req, res) => {
   const { id } = req.params
-  return RestaurantList.findByIdAndUpdate(id, req.body)
+  RestaurantList.findByIdAndUpdate(id, req.body)
     .then(() => res.redirect(`/restaurants/${ id}`))
+    .catch(error => console.log(error))
+})
+
+// 刪除餐廳
+app.delete('/restaurants/:id', (req, res) => {
+  const { id } = req.params
+  RestaurantList.findByIdAndDelete(id)
+    .then(() => res.redirect('/'))
     .catch(error => console.log(error))
 })
 
