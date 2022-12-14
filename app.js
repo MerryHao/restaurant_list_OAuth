@@ -8,9 +8,6 @@ const port = 3000
 //載入express-handlebars
 const exphbs = require('express-handlebars')
 
-//載入restaurant.json
-//const restaurantList = require('./restaurant.json')
-
 // 載入 RestaurantList model
 const RestaurantList = require('./models/restaurant_list') 
 
@@ -34,15 +31,18 @@ db.once('open', () => {
   console.log('mongodb connected!')
 })
 
-//把樣板引擎交給express-handlebars
+// 把樣板引擎交給express-handlebars
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
+
+// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(express.urlencoded({ extended: true }))
 
 // 告訴express靜態檔案夾的位置
 app.use(express.static('public'))
 
 
-//路由設定
+// 路由設定
 app.get('/', (req,res) => {
   RestaurantList.find()
     .lean()
@@ -50,20 +50,30 @@ app.get('/', (req,res) => {
     .catch(error => console.log(error))
 })
 
-app.get('/restaurants/:restaurant_id', (req,res) => {
+// app.get('/restaurants/:restaurant_id', (req,res) => {
   
-  const restaurant = restaurantList.results.find(restaurant => 
-    restaurant.id.toString() === req.params.restaurant_id
-  )
-  res.render('show', {restaurant: restaurant})
-})
+//   const restaurant = restaurantList.results.find(restaurant => 
+//     restaurant.id.toString() === req.params.restaurant_id
+//   )
+//   res.render('show', {restaurant: restaurant})
+// })
 
-app.get('/search', (req,res) => {
-  const keyword = req.query.keyword
-  const restaurants = restaurantList.results.filter(restaurant => 
-    restaurant.name.includes(keyword) ||
-    restaurant.category.includes(keyword))
-  res.render('index', {restaurants: restaurants, keyword: keyword})
+// app.get('/search', (req,res) => {
+//   const keyword = req.query.keyword
+//   const restaurants = restaurantList.results.filter(restaurant => 
+//     restaurant.name.includes(keyword) ||
+//     restaurant.category.includes(keyword))
+//   res.render('index', {restaurants: restaurants, keyword: keyword})
+// })
+
+//新增餐廳
+app.get('/restaurants/new', (req, res) => {
+  return res.render('new')
+})
+app.post('/restaurants', (req, res) => {
+  return RestaurantList.create(req.body) // 存入資料庫
+    .then(() => res.redirect('/')) // 新增完成後導回首頁
+    .catch(error => console.log(error))
 })
 
 //啟動並監聽伺服器

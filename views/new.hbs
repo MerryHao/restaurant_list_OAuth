@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <form action="/restaurants" method="POST">
+    <div class="mb-3">
+      <label for="name" class="form-label">Restaurant Name:<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="name" placeholder="restaurant name" name="name" required/>
+    </div>
+    <div class="mb-3">
+      <label for="name_en" class="form-label">Restaurant Name in English:<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="name_en" placeholder="restaurant name in Englisg" name="name_en" required/>
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Category:<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="category" placeholder="category" list="categoryOptions" name="category" required/>
+      <datalist id="categoryOptions">
+        <option>美式</option>
+        <option>咖啡</option>
+        <option>中東料理</option>
+        <option>日本料理</option>
+        <option>義式餐廳</option>
+      </datalist>
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Image:<span class="text-danger">*</span></label>
+      <input type="url" class="form-control" id="image" placeholder="image url" name="image" required/>
+    </div>
+    <div class="mb-3">
+      <label for="location" class="form-label">Location:<span class="text-danger">*</span></label>
+      <input type="text" class="form-control" id="location" placeholder="restaurant address" name="location" required/>
+    </div>
+    <div class="mb-3">
+      <label for="phone" class="form-label">Phone Number:<span class="text-danger">*</span></label>
+      <input type="tel" class="form-control" id="phone" placeholder="phone number" name="phone" required/>
+    </div>
+    <div class="mb-3">
+      <label for="google_map" class="form-label">Google Map URL:<span class="text-danger">*</span></label>
+      <input type="url" class="form-control" id="google_map" placeholder="google map" name="google_map" required/>
+    </div>
+    <div class="mb-3">
+      <label for="rating" class="form-label">Rating:<span class="text-danger">*</span></label>
+      <input type="number" class="form-control" id="rating" min="0" max="5" step="0.1" placeholder="rating" name="rating" required/>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:<span class="text-danger">*</span></label>
+      <textarea class="form-control" id="description" rows="3" name="description" required></textarea>
+    </div>  
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">
+        新增餐廳
+      </button>
+    </div>
+  </form>
+</div>
