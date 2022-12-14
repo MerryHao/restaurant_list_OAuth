@@ -66,13 +66,29 @@ app.get('/restaurants/:id', (req,res) => {
 //   res.render('index', {restaurants: restaurants, keyword: keyword})
 // })
 
-//新增餐廳
+// 新增餐廳
 app.get('/restaurants/new', (req, res) => {
   return res.render('new')
 })
 app.post('/restaurants', (req, res) => {
   return RestaurantList.create(req.body) // 存入資料庫
     .then(() => res.redirect('/')) // 新增完成後導回首頁
+    .catch(error => console.log(error))
+})
+
+// 修改餐廳
+app.get('/restaurants/:id/edit', (req, res) => {
+  const { id } = req.params
+  return RestaurantList.findById(id)
+    .lean()
+    .then(restaurant => res.render('edit', { restaurant }))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants/:id/edit', (req, res) => {
+  const { id } = req.params
+  return RestaurantList.findByIdAndUpdate(id, req.body)
+    .then(() => res.redirect(`/restaurants/${ id}`))
     .catch(error => console.log(error))
 })
 
