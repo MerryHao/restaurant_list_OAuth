@@ -62,14 +62,14 @@ app.get('/restaurants/:id', (req,res) => {
     .catch(error => console.log(error))
 })
 
-// // 搜尋餐廳
-// app.get('/search', (req,res) => {
-//   const keyword = req.query.keyword
-//   const restaurants = restaurantList.results.filter(restaurant => 
-//     restaurant.name.includes(keyword) ||
-//     restaurant.category.includes(keyword))
-//   res.render('index', {restaurants: restaurants, keyword: keyword})
-// })
+// 搜尋餐廳
+app.get('/search', (req, res) => {
+  const keywords = req.query.keyword.trim()
+  RestaurantList.find({ name: new RegExp(keywords, 'i') })
+    .lean()
+    .then((restaurants) => res.render('index', { restaurants, keywords }))
+    .catch(error => console.log(error))
+})
 
 // 新增餐廳
 app.get('/restaurants/new', (req, res) => {
