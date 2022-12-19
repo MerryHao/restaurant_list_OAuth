@@ -38,13 +38,13 @@ db.once('open', () => {
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
-// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
-app.use(express.urlencoded({ extended: true }))
-
 // 告訴express靜態檔案夾的位置
 app.use(express.static('public'))
 
-app.use(methodOverride("_method"))
+// 用 app.use 規定每一筆請求都需要透過 body-parser 進行前置處理
+app.use(express.urlencoded({ extended: true }))
+
+app.use(methodOverride('_method'))
 
 // 路由設定
 app.get('/', (req,res) => {
@@ -54,13 +54,7 @@ app.get('/', (req,res) => {
     .catch(error => console.log(error))
 })
 
-app.get('/restaurants/:id', (req,res) => {
-  const id = req.params.id
-  return RestaurantList.findById(id)
-    .lean()
-    .then(restaurant => res.render('show', { restaurant }))
-    .catch(error => console.log(error))
-})
+
 
 // 搜尋餐廳
 app.get('/search', (req, res) => {
@@ -78,6 +72,14 @@ app.get('/restaurants/new', (req, res) => {
 app.post('/restaurants', (req, res) => {
   return RestaurantList.create(req.body) // 存入資料庫
     .then(() => res.redirect('/')) // 新增完成後導回首頁
+    .catch(error => console.log(error))
+})
+
+app.get('/restaurants/:id', (req, res) => {
+  const id = req.params.id
+  return RestaurantList.findById(id)
+    .lean()
+    .then(restaurant => res.render('show', { restaurant }))
     .catch(error => console.log(error))
 })
 

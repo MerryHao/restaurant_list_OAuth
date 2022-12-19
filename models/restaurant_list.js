@@ -37,8 +37,5 @@ const restaurantListSchema = new Schema({
     type: String, 
     required: true
   },
- done: {
-    type: Boolean
-  }
 })
 module.exports = mongoose.model('RestaurantList', restaurantListSchema)
