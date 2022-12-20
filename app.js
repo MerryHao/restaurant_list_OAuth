@@ -55,7 +55,6 @@ app.get('/', (req,res) => {
 })
 
 
-
 // 搜尋餐廳
 app.get('/search', (req, res) => {
   const keywords = req.query.keyword.trim()
@@ -65,7 +64,7 @@ app.get('/search', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// 新增餐廳
+// 進入新增餐廳頁面
 app.get('/restaurants/new', (req, res) => {
   return res.render('new')
 })
@@ -75,8 +74,9 @@ app.post('/restaurants', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// 瀏覽特定餐廳
 app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
+  const { id } = req.params
   return RestaurantList.findById(id)
     .lean()
     .then(restaurant => res.render('show', { restaurant }))
@@ -92,6 +92,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// 新增餐廳
 app.post('/restaurants/:id/edit', (req, res) => {
   const { id } = req.params
   RestaurantList.findByIdAndUpdate(id, req.body)
