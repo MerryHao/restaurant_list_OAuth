@@ -13,4 +13,13 @@ router.get('/', (req, res) => {
     .catch(error => console.log(error))
 })
 
+// 搜尋餐廳
+router.get('/search', (req, res) => {
+  const keywords = req.query.keyword.trim()
+  RestaurantList.find({ name: new RegExp(keywords, 'i') })
+    .lean()
+    .then((restaurants) => res.render('index', { restaurants, keywords }))
+    .catch(error => console.log(error))
+})
+
 module.exports = router

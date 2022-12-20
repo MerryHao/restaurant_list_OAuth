@@ -53,14 +53,7 @@ app.use(methodOverride('_method'))
 // 將request導入路由器
 app.use(routes)
 
-// 搜尋餐廳
-app.get('/search', (req, res) => {
-  const keywords = req.query.keyword.trim()
-  RestaurantList.find({ name: new RegExp(keywords, 'i') })
-    .lean()
-    .then((restaurants) => res.render('index', { restaurants, keywords }))
-    .catch(error => console.log(error))
-})
+
 
 
 //啟動並監聽伺服器
