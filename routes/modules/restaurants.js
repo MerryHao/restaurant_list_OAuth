@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// 修改餐廳
+// 進入修改餐廳頁面
 router.get('/:id/edit', (req, res) => {
   const { id } = req.params
   RestaurantList.findById(id)
@@ -33,8 +33,8 @@ router.get('/:id/edit', (req, res) => {
     .catch(error => console.log(error))
 })
 
-// 新增餐廳
-router.post('/:id/edit', (req, res) => {
+// 修改餐廳
+router.put('/:id', (req, res) => {
   const { id } = req.params
   RestaurantList.findByIdAndUpdate(id, req.body)
     .then(() => res.redirect(`/restaurants/${id}`))
