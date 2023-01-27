@@ -1,6 +1,7 @@
 //載入express並將express存進app變數
 const express = require('express')
 const session = require('express-session')
+const usePassport = require('./config/passport')
 const app = express()
 
 //定義測試用的port: 3000
@@ -41,7 +42,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use(methodOverride('_method'))
 
-
+usePassport(app)
 // 將request導入路由器
 app.use(routes)
 
