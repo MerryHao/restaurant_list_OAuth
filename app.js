@@ -1,5 +1,6 @@
 //載入express並將express存進app變數
 const express = require('express')
+const session = require('express-session')
 const app = express()
 
 //定義測試用的port: 3000
@@ -27,7 +28,11 @@ require('./config/mongoose')
 // 把樣板引擎交給express-handlebars
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
-
+app.use(session({
+  secret: 'ThisIsSecret',
+  resave: false,
+  saveUninitialized: true
+}))
 // 告訴express靜態檔案夾的位置
 app.use(express.static('public'))
 
