@@ -16,6 +16,9 @@ const RestaurantList = require('./models/restaurant_list')
 // 載入method override
 const methodOverride = require('method-override')
 
+// 載入connect-flash套件
+const flash = require('connect-flash')
+
 // 引用路由器
 const routes = require('./routes')
 
@@ -44,10 +47,14 @@ app.use(methodOverride('_method'))
 
 usePassport(app)
 
+app.use(flash())
+
 app.use((req, res ,next) => {
   console.log(req.user)
   res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
   next()
 })
 // 將request導入路由器
