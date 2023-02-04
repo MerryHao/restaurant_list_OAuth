@@ -1,5 +1,5 @@
 {
-  "name": "restaurant_list_CRUD_extension",
+  "name": "restaurant_list_OAuth",
   "version": "1.0.0",
   "description": "restaurant list",
   "main": "app.js",
