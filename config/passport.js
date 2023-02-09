@@ -41,7 +41,7 @@ module.exports = app => {
           .then(hash => User.create({
             name,
             email,
-            passport: hash
+            password: hash
           }))
           .then(user => done(null, user))
           .catch(err => done(err, false))
