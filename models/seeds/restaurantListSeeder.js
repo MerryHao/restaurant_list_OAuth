@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const RestaurantList = require('../restaurant_list') // 載入 RestaurantList model
 const User = require('../user')
 const db = require('../../config/mongoose')
-const restaurantListJson = require('../../restaurant.json').results //載入restaurant.json
+const restaurantListJson = require('./restaurant.json').results //載入restaurant.json
 const SEED_USER = [{
   email: 'user1@example.com',
   password: '12345678',
